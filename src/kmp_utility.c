@@ -39,7 +39,8 @@
 #include "kmp_i18n.h"
 
 #if KMP_OS_HERMIT
-extern "C" int gethostname(char *name, size_t len);
+//extern "C" int gethostname(char *name, size_t len);
+extern "C" int sys_gethostname(char *name, size_t len);
 #endif
 
 /* ------------------------------------------------------------------------ */
@@ -344,7 +345,8 @@ __kmp_expand_host_name( char *buffer, size_t size )
     }
 #else
     buffer[size - 2] = 0;
-    if (gethostname( buffer, size ) || buffer[size - 2] != 0)
+   // if (gethostname( buffer, size ) || buffer[size - 2] != 0)
+    if (sys_gethostname( buffer, size ) || buffer[size - 2] != 0)
     KMP_STRCPY_S( buffer, size, unknown );
 #endif
 }
